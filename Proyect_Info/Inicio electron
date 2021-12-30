@@ -1,0 +1,15 @@
+npm install --yes  => iniciar proyecto node js
+npm i electron     => Iniciar proyecto electron
+npm install electron-reload => Reinicia el proyecto 
+
+npm install electron-packager =>modulo para empaquetar
+npm install moment --save
+
+npm install read-excel-file
+
+npm install jspdf --save //https://www.npmjs.com/package/jspdf // Crear pdf en Electron
+npm install jspdf jspdf-autotable //https://www.npmjs.com/package/jspdf-autotable // Crear Tablas en pdf 
+
+npm install adm-zip https://thecodebarbarian.com/working-with-zip-files-in-node-js.html //crear zip
+
+https://runebook.dev/es/docs/electron/api/browser-window // Tipos de ventana

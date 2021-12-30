@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- CARGAR EXCEL -->
+  <script type="text/javascript" src="../../../js/Recursos/FileSaver.js"></script>
+  <script type="text/javascript" src="../../../js/Recursos/xlsxfullmin.js "></script>
+
+  <script type="text/javascript" src="../../../js/Compras/RFQ.js"></script>
+  <script type="text/javascript" src="../../../js/Recursos/jspdf.min.js"></script>
+  <!-----------------------------------------------    JQUERY    ---------------------------------------------------------------->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <title>Nobl-E Soft</title>
+</head>
+
+<body onload="CargarProveedor()">
+  <div class="card text-center">
+    <div class="card-header">
+      <!------------------------------ Formulario -------------------------------------->
+      <div class="container shadow-lg p-3 mb-5 bg-white rounded">
+        <form id="RegistroSalida" name="RegistroSalida">
+          <!--EMPRESA-->
+          <div class="form-row">
+            <div class="form-group col text-md-center">
+              <p class="font-weight-bold">EMPRESA</p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="recipient-name" class="font-weight-label">Fecha de registro:</label>
+              <input type="date" class="form-control" id="Fecha" />
+            </div>
+
+            <div class="form-group col-md-5">
+              <label for="inputAddress" class="font-weight-label">Responsable</label>
+              <input type="text" id="Atiende" class="form-control text-dark" placeholder="Nombre..." name="Atiende" style="text-transform:uppercase;" value="ss"/>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Formato</label>
+              <select required id="Formato" name="Formato" class="form-control">
+                <option value="-" selected disabled>Formato</option>
+                <option value="Folio">Folio</option>
+                <option value="Orden">Orden</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Consecutivo</label>
+              <input required type="text" id="Codigo" class="form-control bg-info text-light" placeholder="Req-00000" name="Folio"
+                autocomplete="off"/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Obra</label>
+              <input required type="text" id="Obra" class="form-control bg-warning" placeholder="Proyecto..." name="Obra"
+                autocomplete="off" style="text-transform:uppercase;" data-toggle="tooltip" data-placement="top" title="Nombre exacto de obra"  value="ss"/>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Proveedor</label>
+              <select required id="Proveedor" name="Proveedor" class="form-control" onclick="SeleccionProveedor()" onchange="SeleccionProveedor()" data-default-value="-">
+                <option id="ProveedorDefault" value="-" selected disabled>Proveedor</option>
+              </select>
+            </div>
+
+            <div class="form-group col">
+              <label for="inputAddress2" class="font-weight-label">Dirección</label>
+              <input required type="text" id="Direccion" class="form-control" placeholder="Direccion..."
+                name="Direccion" autocomplete="off"/>
+            </div>
+          </div>
+
+          <!--ARTICULO-->
+          <hr />
+          <div class="form-row">
+            <div class="form-group col text-md-center">
+              <p class="font-weight-bold">ARTICULO</p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Unidad</label>
+              <input type="text" id="Unidad" class="form-control solo-numero" name="Unidad" autocomplete="off" />
+            </div>
+
+            <!--    <div class="form-group col-md-3">
+              <label for="inputAddress2" class="font-weight-label">Código/Clave</label>
+              <input type="text" id="Clave" class="form-control" name="Sal_OT" autocomplete="off" value="AB-0556" />
+            </div> -->
+
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Cantidad</label>
+              <input type="number" id="Cantidad" class="form-control solo-numero" name="Sal_Cantidad" autocomplete="off" />
+            </div>
+
+            <div class="form-group col-md-5">
+              <label for="inputAddress2" class="font-weight-label">Descripción</label>
+              <input type="text" id="Descripcion" class="form-control" name="Sal_OT" autocomplete="off" />
+            </div>
+          </div>
+          <hr />
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">PU</label>
+              <input type="text" id="PU" class="form-control" name="Sal_OT" autocomplete="off" data-toggle="tooltip" data-placement="top" title="Precio unitario"/>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="inputState" class="font-weight-label">Moneda</label>
+              <select required id="Moneda" name="Sal_Estado" class="form-control">
+                <option value="Moneda" selected disabled>Moneda</option>
+                <option value="MXN">MXN</option>
+                <option value="USD">USD</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Descuento</label>
+              <input type="number" id="Descuento" class="form-control" name="Sal_OT" autocomplete="off" value="0"/>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="inputAddress2" class="font-weight-label">Nombre archivo</label>
+              <input type="text" id="archivo" class="form-control  bg-info text-light" name="archivo" autocomplete="off" value="ss"/>
+            </div>
+          </div>
+        </form>
+        <button type="submit" class="btn btn-secondary" onclick="AddNota()">
+          <i class="fas fa-plus-square"></i> Agregar
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <!------------------------------ TABLA -------------------------------------->
+
+      <div class="container-fluid shadow-lg p-3 mb-5 bg-white rounded">
+        <input type="file" id="input-excel" onchange="CargarExcel(event)" />
+        <hr>
+
+        <table class="table table-condensed table-hover" id="TablaLineas">
+          <thead class="thead-dark">
+            <tr>
+              <th>Unidad</th>
+              <th>Cantidad</th>
+              <th>Descripción</th>
+              <th>PU</th>
+              <th>Descuento</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <br /><br />
+
+        <hr />
+        <button type="button" class="btn btn-secondary" onclick="Imprimir()">
+          <i class="fas fa-file-download"></i> Imprimir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: none;">
+    <!--Aqui se alimentara la tabla cargar del excel-->
+    <table id="wrapper"></table>
+  </div>
+</body>
+
+</html>

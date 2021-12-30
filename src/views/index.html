@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Nobl-E Soft</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!------incluir cabezera navegacion----->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
+
+
+    <!--<link rel="icon" type="image/ico" href="/src/public/icon/Gemak.ico" />-->
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body>
+    <!------incluir navegacion Menu----->
+    <style>
+        body {
+            background-image: url('../assets/wall1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+           
+        }
+
+        body::before {
+            content: "";
+            width: 100%;
+            min-height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.6;
+            background: linear-gradient(100deg, rgba(0, 45, 104, 0.979), rgb(255, 0, 0));
+            z-index: -1;
+        }
+    </style>
+
+    <div class="bg-light" style="opacity: .8;">
+        <div class="text-center">
+            <!-- Masthead Avatar Image-->
+            <img src="../assets/promesa.png" alt="" width="100%" />
+            <!-- Masthead Heading-->
+            <p class="font-weight ">Promesa App - v 1.1.0</p>
+            <p class="font-weight "> <span id="Sp_Usuario"> Nobl-E Soft</span> </p>
+        </div>
+        <br>
+    </div>
+ 
+  
+    <!-- ----------------------------------------------------------------------------- MAQUINAS -------------------------------------------------------------------------------->
+    <!--<div id="barra"></div>   --->
+    <!-- ---------------------------------------------------------------------- CONTADOR ORDENES ------------------------------------------------------------------------------
+    
+        
+    <section id="counting_sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="counting_sl">
+                        <i class="fas fa-wrench"></i>
+                        <h2 class="counter">150</h2>
+                        <h4>Lineas Activas</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="counting_sl">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <h2 class="counter">120</h2>
+                        <h4>Vencidas</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="counting_sl">
+                        <i class="fas fa-business-time"></i>
+                        <h2 class="counter">65</h2>
+                        <h4>En Proceso</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="counting_sl">
+                        <i class="fas fa-box-open"></i>
+                        <h2 class="counter">425</h2>
+                        <h4>Terminadas</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    -->
+
+
+
+</body>
+
+</html>
+
+
+
+
+<script>
+// Returns a random integer from 1 to 4:
+let Random = Math.floor(Math.random() * 17) + 1;
+
+console.log(Random)
+document.body.style.background = "url('../assets/wall"+Random+".jpg')  center no-repeat fixed";
+document.body.style.backgroundSize = "cover";
+    const {
+        ipcRenderer
+    } = require('electron');
+
+    ipcRenderer.on('eventProductNew', (e, newProduct) => {//Recibir el data del js principal
+        console.log(newProduct);
+    })
+
+
+
+    
+</script>

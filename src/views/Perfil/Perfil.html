@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ 
+  <script type="text/javascript" src="../../js/Perfil/Perfil.js"></script> 
+  <!-----------------------------------------------    JQUERY    ---------------------------------------------------------------->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <title>Nobl-E Soft</title>
+</head>
+
+<body>
+    <br>
+<div class="container shadow-lg p-3 rounded">
+    <div class="card text-center col-md-12 col-s-12">
+        <div class="card-body">
+            <form id="FormularioPerfil">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col"> 
+                            <label for="recipient-name" class="col-form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="Nombre">
+                        </div> 
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="recipient-name" class="col-form-label">Contraseña:</label>
+                            <input type="text" class="form-control" id="Contrasena">
+                        </div> 
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="inputAddress2" class="font-weight-label" data-toggle="tooltip" data-placement="top" title="Ruta de instalación OneDrive">One Drive</label>
+                            <select required id="OneDrive" name="Formato" class="form-control" data-toggle="tooltip" data-placement="top" title="Ruta de instalación OneDrive">
+                              <option value="-" selected disabled>Ruta</option>
+                              <option value="C">C</option>
+                              <option value="D">D</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="form-row">
+                        <div class="col text-center">
+                            <button type="button" id="Excel" name="Excel" class="btn btn-info btn-lg"
+                                onclick="AddPerfil()" data-toggle="tooltip" data-placement="top"
+                                title="Guardar"><i class="fas fa-user-plus"></i>Guardar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+
+

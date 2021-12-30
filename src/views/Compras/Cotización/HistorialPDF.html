@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script type="text/javascript" src="../../../js/Compras/HistorialPDF.js"></script>
+  <!-----------------------------------------------    JQUERY    ---------------------------------------------------------------->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <title>Nobl-E Soft</title>
+</head>
+
+<body onload="CargarFechas()">
+  <!------ incluir navegacion Menu ----->
+  <div class="card text-center">
+    <div class="card-header">
+      <!------------------------------ BUSCAR -------------------------------------->
+
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="inputState" class="font-weight-label">Año</label>
+          <select required id="Anio" name="Sal_Estado" class="form-control">
+            <option value="N/A" disabled>Seleccione año</option>
+           
+          </select>
+        </div>
+
+        <div class="form-group col-md-2">
+          <label for="inputAddress2" class="font-weight-label">Obra</label>
+          <select required id="Obra" name="Obra" class="form-control">
+            <option value="-" selected disabled>Obras</option>
+
+          </select>
+        </div>
+
+        <div class="form-group col-md-1 p-4">
+          <button type="button" id="getProducts" name="getProducts" class="btn btn-secondary"
+            onclick="MostrarReporte()">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <!------------------------------ TABLA -------------------------------------->
+    <div class="container-fluid shadow-lg p-3 mb-5 bg-white rounded"
+      style="width: 96%; height: 650px; overflow: scroll">
+      <ul class="list-group" id="ListaGeneral">
+        
+      </ul>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-5"></div>
+      <div class="form-group col-md-1">
+        <button type="button" id="getProducts" name="getProducts" class="btn btn-info" onclick="Exportar()">
+          Exportar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

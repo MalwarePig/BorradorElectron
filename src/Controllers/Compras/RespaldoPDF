@@ -1,0 +1,156 @@
+const Controller = {};
+const {app,BrowserWindow,Menu,ipcMain,nativeImage} = require('electron');
+const {jsPDF} = require('jspdf');
+require('jspdf-autotable');
+var fs = require("fs");
+const url = require('url');
+const path = require('path');
+
+
+Controller.pdf = (data) => {
+    console.log("Aqui ya se hace el pdf: " + data.length);
+    
+    let TablaBody = [];
+    let Arreglo = [];
+    //var columns = ["#", "CANT", "UN", "DESCRIPCIóN", "PU", "IMPORTE"];
+    for (let index = 0; index < data.length; index++) {
+        let Contador =  data[index][0];
+        let Cantidad =  data[index][1];
+        let Unidad =  data[index][2];
+        let Descripcion =  data[index][4];
+        let PU =  data[index][3];
+        let Importe = (Cantidad * PU);
+        let Arreglo = [Contador,Cantidad,Unidad,Descripcion,PU,Importe];
+        TablaBody.push(Arreglo)
+    }
+
+    console.log(TablaBody);
+    //console.log([NuevaCotizacion])
+    var doc = new jsPDF(); //Alto y ancho
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////// LOGO ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    let ruta = path.join(__dirname, '../../assets/promesa.png');
+    console.log("ruta: " + ruta)
+    const Logo = nativeImage.createFromPath(ruta);
+    doc.addImage(Logo.toPNG(), 10, 2, 100, 25); //EJE X,Y  -  ANCHO Y ALTO MORELOS
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// ENCABEZADO //////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    doc.setFontSize(9);
+    doc.setTextColor(25);
+    doc.setTextColor("#717170"); //COLOR GRIS
+    doc.setFont("calibri", "bold") //TIMES Y NEGRITAS
+    doc.text("PROMESA", 185, 10);
+    doc.setFont("calibri", "normal");
+    doc.text("PROYECTOS MECANICOS ELECTRICOS, SA DE CV", 200, 15, null, null, 'right');
+    doc.text("Av. Cristobal Colón #1046 Ote, Oficina F", 200, 20, null, null, 'right');
+    doc.text("Monterrey Nuevo Leon. Tel 8340 6203", 200, 25, null, null, 'right');
+    doc.setFontSize(5);
+    doc.line(10, 28, 200, 28) //x1, y1, x2, y2
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// POST ENCABEZADO /////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    doc.setFontSize(20);
+    doc.text("Orden #", 10, 45);
+    doc.setTextColor("#1321c3"); //COLOR AZUL
+    doc.text("S45317", 35, 45);
+    doc.setTextColor("#717170"); //COLOR GRIS
+    doc.text("Fecha Orden:", 100, 45);
+    doc.setTextColor("#e82017"); //COLOR ROJO
+    doc.text("22/10/2021", 140, 45);
+    doc.setTextColor("#717170"); //COLOR GRIS
+    doc.setFontSize(9);
+    let = loremipsum = '30828 - PROMESA PROYECTOS MECANICOS ELECTRICOS SA  DE CV    OFICINA F AV CRISTOBAL COLON 1046 OTE    MONTERREY 64000    +52 81 8340 6203    RFC: PPM1406051Y5';
+    let lines = doc.splitTextToSize(loremipsum, 80); //420 el ancho de la fila para el texto
+
+    doc.text(lines, 10, 50); //Bloque izquierdo
+    //doc.text(lines, 100, 50); //Bloque derecho
+
+    doc.line(10, 70, 200, 70) //x1, y1, x2, y2
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////// TABLA ///////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    doc.text(10, 75, "Mostrando una Tabla con JsPDF y el Plugin AutoTable");
+
+   // var columns = ["#", "CANT", "UN"];
+    var columns = ["#", "CANT", "UN", "DESCRIPCIóN", "PU", "IMPORTE"]; 
+    /*var data = [
+        [1, 10, "PZ", "Llave 80.03001] Llave monomando bajo para lavabo linea Sydnemodelo 80.03001 marca Castel", "$150.50", "3%", "$121,054.50", "$117,422.87"],
+        [2, 15, "PZ", "Lavabo Lemans blanco] Lavabo suelto modelo Lemans color", "$1,984.50", "3%", "$21,054.50", "$117,422.87"],
+        [3, 35, "PZ", "Valvula 90.0054] Valvula Pop-up cierre interior con rebosadero", "$1,984.50", "4%", "$150,054.50", "$117,422.87"],
+        [4, 40, "PZ", "Cespol 90.0093] Cespol sifon recto modelo 90.0093 marca Cast", "$1,984.50", "30%", "$200,054.50", "$117,422.87"],
+        [5, 70, "PZ", "Regadera 537492] Regadera de plato 20cm acabado cromo", "$1,984.50", "0%", "$300,054.50", "$117,422.87"], //12 px por fila
+    ];*/
+
+    doc.autoTable(columns, TablaBody, {
+        theme: 'striped', //Striped: Azul, grid: Verde
+        margin: {
+            top: 80,
+            left: 10,
+            right: 10
+        }
+    });
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// CALCULO TOTAL ///////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    doc.setFontSize(11);
+    let MargenTopTabla = 93; 
+    let SaltoLineas = (8 * data.length) + MargenTopTabla;
+    console.log("Linea: " + SaltoLineas)
+
+    doc.cell(140, SaltoLineas, 60, 10, "Subtotal \t\t $594,255.30", 3, "center") //cell(x, y, width, height, text, lineNumber, align)
+
+    doc.cell(140, SaltoLineas, 60, 10, "IVA 16% \t\t $95,080.86", 2, "center") //cell(x, y, width, height, text, lineNumber, align)
+
+    doc.cell(140, SaltoLineas, 60, 10, "Total \t\t\t $ 689,336.1", 1, "center") //cell(x, y, width, height, text, lineNumber, align)
+    doc.setTextColor("#e82017"); //COLOR ROJO
+    doc.text("MXN", 185, 188);
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// FIRMA RESPONSABLE ///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    doc.setTextColor("#717170"); //COLOR GRIS
+    doc.setFontSize(9);
+    doc.line(80, 270, 130, 270) //x1, y1, x2, y2
+    doc.text(95, 275, "RESPONSABLE");
+
+ 
+    doc.save("RFQ" + '.pdf');
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////// COPIAR ARCHIVO EN RUTA //////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    let RutaActual = path.join(__dirname);
+    var RutaCorta = '';
+    let i = 0;
+    while (i < 3) {
+        RutaCorta = RutaCorta + RutaActual.split('\\')[i] + '\\'; // Obtiene ruta 'C:\Users\UsuarioXXX'
+        i++;
+    }
+
+    RutaCorta = RutaCorta + '\OneDrive\\aleman';//Se concatena ruta exacta de usuario
+     console.log("Ruta Corta: " + RutaCorta);
+   /*  fs.copyFile('RFQ.pdf', RutaCorta + '/Copia.pdf', (err) => {
+        if (err) throw err;
+        console.log('Archivo copiado!');
+    }); */
+
+    
+
+    /*let RutaDocuments = path.join(__dirname+'../../../../../');
+    console.log(RutaDocuments)
+    fs.copyFile('RFQ.pdf', RutaDocuments+'/OtroRFQ.pdf', (err) => {
+        if (err) throw err;
+        console.log('source.txt was copied to destination.txt');
+    });*/
+}
+
+
+
+
+
+module.exports = Controller;
