@@ -5,7 +5,7 @@ git config --global user.name "MalwarePig"
 ================================= COMANDOS GIT UP ========================================
 git init
 git add /src
-git commit -m "Formato Final"
+git commit -m "Formato Final 2"
 git branch -M main
 git remote add origin https://github.com/MalwarePig/BorradorElectron.git
    
